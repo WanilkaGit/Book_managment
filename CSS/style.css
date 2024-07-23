@@ -1,0 +1,17 @@
+body{
+    background-color: black;
+    color: white;
+    font-size: 70px;
+}
+
+p.GroupA {
+    margin-bottom: 10px; /* Встановіть бажаний великий відступ */
+}
+
+p.GroupB {
+    margin-top: 10px; /* Встановіть бажаний великий відступ */
+}
+
+ul{
+    margin-left: 10px;
+}
