@@ -39,6 +39,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def start(request:Request, skip: int=0 , limit: int=50, db:Session= Depends(get_db)):
     return template.TemplateResponse("main.html", {'request': request})
 
+
 @app.post("/token")
 async def token_get(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     if form_data.username != username or form_data.password != password:
@@ -46,27 +47,39 @@ async def token_get(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
 
     return {"access_token": form_data.username, "token_type": "bearer"}
 
+
 @app.get("/protected")
 async def protected(token: str = Depends(oauth2_scheme)):
     return {"message": "Ці дані доступні лише авторизованим користувачам"}
+
 
 @app.post('/author/add/', response_model=schemas.Author)
 def add_author(author: schemas.AuthorCreate, db: Session = Depends(get_db)):
     return crud.create_author(db=db, author=author)
 
+
 @app.get('author/get/', response_model=schemas.Author)
 def get_author(author_id: int, db: Session = Depends(get_db)):
     return crud.get_author(db, author_id)
+
+
+@app.get("/authorlist/")
+def authorlist(request:Request, skip: int=0 , limit: int=50, db:Session = Depends(get_db)):
+    authors = crud.get_authors(db, skip=skip, limit=limit)
+    return template.TemplateResponse("authorlist.html", {'request': request, 'authors': authors})
+
 
 @app.post('/{author_id}/add/', response_model=schemas.Book)
 def add_book(book: schemas.BookCreate, author_id: int, db: Session = Depends(get_db), curent_user: str = Depends(protected)):
     return crud.create_book(db=db, book=book, author_id=author_id)
 
+
 @app.get('/book/get/', response_model=schemas.Book)
 def get_book(book_id: int, db: Session = Depends(get_db), curent_user: str = Depends(protected)):
     return crud.get_book(db, book_id)
 
+
 @app.get("/booklist/")
 def booklist(request:Request, skip: int=0 , limit: int=50, db:Session= Depends(get_db)):
     books = crud.get_books(db, skip=skip, limit=limit)
-    return template.TemplateResponse("books_info.html", {'request': request, 'books': books})
+    return template.TemplateResponse("booklist.html", {'request': request, 'books': books})
