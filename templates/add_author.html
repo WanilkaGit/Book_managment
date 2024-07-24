@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Example</title>
+</head>
+<body>
+    <h1>Натисни кнопку</h1>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <form action="/button-clicked" method="post">
+        <label for="name">Введіть ваше ім'я:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Натисни мене</button>
+    </form>
+</body>
+</html>

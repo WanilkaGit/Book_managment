@@ -11,12 +11,12 @@
     <h2>We can</h2>
     <ul>
         <li>Add an author
-            <form action="/booklist/" method="post">
+            <form action="/author/add/" method="post">
                 <button type="submit">Add an author</button>
             </form>
         </li>
         <li>Search for an author
-            <form action="/booklist/" method="post">
+            <form action="/author/get" method="post">
                 <button type="submit">Search for an author</button>
             </form>
         </li>
@@ -26,12 +26,12 @@
             </form>
         </li>
         <li>Add a book
-            <form action="/booklist/" method="post">
+            <form action="/{author_id}/get/" method="post">
                 <button type="submit">Add a book</button>
             </form>
         </li>
         <li>Get a book
-            <form action="/booklist/" method="post">
+            <form action="/book/get/" method="post">
                 <button type="submit">Get a book</button>
             </form>
         </li>
