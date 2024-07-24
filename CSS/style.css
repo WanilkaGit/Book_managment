@@ -15,3 +15,12 @@ p.GroupB {
 ul{
     margin-left: 10px;
 }
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}

@@ -1,7 +1,8 @@
-from fastapi import FastAPI, HTTPException, Depends, Request
+from fastapi import FastAPI, HTTPException, Depends, Request, Form
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
 
 from pydantic import BaseModel
 
@@ -53,9 +54,26 @@ async def protected(token: str = Depends(oauth2_scheme)):
     return {"message": "Ці дані доступні лише авторизованим користувачам"}
 
 
-@app.post('/author/add/', response_model=schemas.Author)
-def add_author(author: schemas.AuthorCreate, db: Session = Depends(get_db)):
-    return crud.create_author(db=db, author=author)
+@app.get('/author/add/ask/', response_model=schemas.Author)
+def add_author(request:Request, db: Session = Depends(get_db)):
+    return template.TemplateResponse("add_author.html", {'request': request})
+
+
+@app.post('/author/add/result/', response_model=schemas.Author)
+def add_author(db: Session = Depends(get_db), name: str = Form(...), second_name: str = Form(...)):
+    crud.create_author(db=db, name=name, second_name=second_name)
+    html_content = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Simple Page</title>
+    </head>
+    <body>
+        <h1>Author have added complete</h1>
+    </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content)
 
 
 @app.get('author/get/', response_model=schemas.Author)

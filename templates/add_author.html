@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Button Example</title>
+    <link href="/CSS/style.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booklist</title>
 </head>
 <body>
     <h1>Натисни кнопку</h1>
     {% if message %}
         <p>{{ message }}</p>
     {% endif %}
-    <form action="/button-clicked" method="post">
-        <label for="name">Введіть ваше ім'я:</label>
+    <form action="/author/add/result/" method="post">
+        <label for="name">Write author name:</label>
         <input type="text" id="name" name="name" required>
-        <button type="submit">Натисни мене</button>
+        <label for="second_name">Write author second name:</label>
+        <input type="text" id="second_name" name="second_name" required>
+        <button type="submit">Press me</button>
     </form>
 </body>
 </html>

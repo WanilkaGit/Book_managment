@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/CSS/style.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booklist</title>
+</head>
+<body>
+    <h1>Натисни кнопку</h1>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <form action="/author/get/result/" method="post">
+        <label for="id">Write author name</label>
+        <input type="text" id="name" name="id" required>
+        <button type="submit">Press me</button>
+    </form>
+</body>
+</html>

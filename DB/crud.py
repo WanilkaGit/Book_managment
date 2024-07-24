@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from DB import modals, schemas
 
-def create_author(db: Session, author: schemas.AuthorCreate):
-    db_author = modals.DBAuthor(name=author.name, second_name=author.second_name)
+def create_author(db: Session, name: str, second_name: str):
+    db_author = modals.DBAuthor(name=name, second_name=second_name)
     db.add(db_author)
     db.commit()
     db.refresh(db_author)
