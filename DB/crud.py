@@ -14,8 +14,8 @@ def get_author(db: Session, author_id: int):
 def get_authors(db: Session, skip: int = 0, limit: int = 66):
     return db.query(modals.DBAuthor).offset(skip).limit(limit).all()
 
-def create_book(db: Session, book: schemas.BookCreate, author_id: int):
-    db_book = modals.DBBook(title=book.title, pages=book.pages, author_id=author_id)
+def create_book(db: Session, title, pages, author_id):
+    db_book = modals.DBBook(title=title, pages=pages, author_id=author_id)
     db.add(db_book)
     db.commit()
     db.refresh(db_book)

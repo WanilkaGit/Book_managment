@@ -40,14 +40,29 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def start(request:Request, skip: int=0 , limit: int=50, db:Session= Depends(get_db)):
     return template.TemplateResponse("main.html", {'request': request})
 
+@app.get("/login")
+def login(request: Request):
+    return template.TemplateResponse("login.html", {"request": request})
 
 @app.post("/token")
 async def token_get(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     if form_data.username != username or form_data.password != password:
         raise HTTPException(status_code = 400, detail = "Incorrect username or password")
+    {"access_token": form_data.username, "token_type": "bearer"}
+    login_complete = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Simple Page</title>
+    </head>
+    <body>
+        <h1>Login complete</h1>
+    </body>
+    </html>
+    """
+    HTMLResponse(content=login_complete)
 
     return {"access_token": form_data.username, "token_type": "bearer"}
-
 
 @app.get("/protected")
 async def protected(token: str = Depends(oauth2_scheme)):
@@ -86,10 +101,18 @@ def authorlist(request:Request, skip: int=0 , limit: int=50, db:Session = Depend
     authors = crud.get_authors(db, skip=skip, limit=limit)
     return template.TemplateResponse("authorlist.html", {'request': request, 'authors': authors})
 
+@app.get('/author/add/ask/', response_model=schemas.Author)
+def add_author(request:Request, db: Session = Depends(get_db)):
+    return template.TemplateResponse("add_author.html", {'request': request})
 
-@app.post('/{author_id}/add/', response_model=schemas.Book)
-def add_book(book: schemas.BookCreate, author_id: int, db: Session = Depends(get_db), curent_user: str = Depends(protected)):
-    return crud.create_book(db=db, book=book, author_id=author_id)
+@app.get('/book/add/ask/', response_model=schemas.Author)
+def add_author(request:Request, db: Session = Depends(get_db)):
+    return template.TemplateResponse("add_book.html", {'request': request})
+
+@app.post('/book/add/result', response_model=schemas.Book)
+def add_book(db: Session = Depends(get_db), curent_user: str = Depends(protected), title: str = Form(...), pages: int = Form(...), author_id: int = Form(...)):
+    crud.create_book(db=db, author_id=author_id, title=title, pages=pages)
+    return print("0")
 
 
 @app.get('/book/get/', response_model=schemas.Book)
