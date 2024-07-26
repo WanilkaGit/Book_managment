@@ -37,7 +37,7 @@ password = '1'
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @app.get("/")
-def start(request:Request, skip: int=0 , limit: int=50, db:Session= Depends(get_db)):
+def start(request:Request, skip: int=0 , limit: int=50):
     return template.TemplateResponse("main.html", {'request': request})
 
 
@@ -57,7 +57,7 @@ async def protected(token: str = Depends(oauth2_scheme)):
 
 
 @app.get('/author/add/ask/', response_model=schemas.Author)
-def add_author(request:Request, db: Session = Depends(get_db)):
+def add_author(request:Request):
     return template.TemplateResponse("add_author.html", {'request': request})
 
 @app.post('/author/add/result/', response_model=schemas.Author)
@@ -91,13 +91,13 @@ def authorlist(request:Request, skip: int=0 , limit: int=50, db:Session = Depend
     return template.TemplateResponse("authorlist.html", {'request': request, 'authors': authors})
 
 @app.get('/author/add/ask/', response_model=schemas.Author)
-def add_author(request:Request, db: Session = Depends(get_db)):
+def add_author(request:Request):
     return template.TemplateResponse("add_author.html", {'request': request})
 
 
 
 @app.get('/book/add/ask/', response_model=schemas.Author)
-def add_author(request:Request, db: Session = Depends(get_db)):
+def add_author(request:Request):
     return template.TemplateResponse("add_book.html", {'request': request})
 
 @app.post('/book/add/result', response_model=schemas.Book)
@@ -119,10 +119,14 @@ def add_book(db: Session = Depends(get_db), title: str = Form(...), pages: int =
     """
     return HTMLResponse(content=html_add_book_result)
 
+@app.post('/book/get/ask', response_model=schemas.Book)
+def get_book(request:Request):
+    return template.TemplateResponse("get_book.html", {'request': request})
 
-@app.get('/book/get/', response_model=schemas.Book)
-def get_book(book_id: int, db: Session = Depends(get_db), curent_user: str = Depends(protected)):
-    return crud.get_book(db, book_id)
+@app.post('/book/get/result', response_model=schemas.Book)
+def get_book(request:Request, book_id: int  = Form(...), db: Session = Depends(get_db)):
+    book = crud.get_book(db, book_id)
+    return template.TemplateResponse("get_book_res.html", {'request': request, 'book': book})
 
 
 @app.get("/book/list/")
