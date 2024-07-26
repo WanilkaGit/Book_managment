@@ -9,37 +9,40 @@
 <body>
     <h1>Book managment</h1>
     <h2>We can</h2>
-    <ul>
-        <li>Add an author
-            <form action="/author/add/" method="post">
-                <button type="submit">Add an author</button>
-            </form>
-        </li>
-        <li>Search for an author
-            <form action="/author/get" method="post">
-                <button type="submit">Search for an author</button>
-            </form>
-        </li>
-        <li>Authorlist
-            <form action="/authorlist/" method="post">
-                <button type="submit">Authorlist</button>
-            </form>
-        </li>
-        <li>Add a book
-            <form action="/{author_id}/get/" method="post">
-                <button type="submit">Add a book</button>
-            </form>
-        </li>
-        <li>Get a book
-            <form action="/book/get/" method="post">
-                <button type="submit">Get a book</button>
-            </form>
-        </li>
-        <li>Booklist
-            <form action="/booklist/" method="post">
-                <button type="submit">Booklist</button>
-            </form>
-        </li>
-    </ul>
+    <li class="form-container">Authorized
+        <form action="/login/" method="post">
+            <button type="submit">Authorize</button>
+        </form>
+    </li>
+    <li class="form-container">Add an author
+        <form action="/author/add/ask/" method="post">
+            <button type="submit">Add an author</button>
+        </form>
+    </li>
+    <li class="form-container">Search for an author
+        <form action="/author/get" method="post">
+            <button type="submit">Search for an author</button>
+        </form>
+    </li>
+    <li class="form-container">Authorlist
+        <form action="/author/list/" method="post">
+            <button type="submit">Authorlist</button>
+        </form>
+    </li>
+    <li class="form-container">Add a book
+        <form action="/book/add/ask" method="post">
+            <button type="submit">Add a book</button>
+        </form>
+    </li>
+    <li class="form-container">Get a book
+        <form action="/book/get/" method="post">
+            <button type="submit">Get a book</button>
+        </form>
+    </li>
+    <li class="form-container">Booklist
+        <form action="/book/list/" method="post">
+            <button type="submit">Booklist</button>
+        </form>
+    </li>
 </body>
 </html>

@@ -40,6 +40,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def start(request:Request, skip: int=0 , limit: int=50, db:Session= Depends(get_db)):
     return template.TemplateResponse("main.html", {'request': request})
 
+
 @app.get("/login")
 def login(request: Request):
     return template.TemplateResponse("login.html", {"request": request})
@@ -48,20 +49,6 @@ def login(request: Request):
 async def token_get(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     if form_data.username != username or form_data.password != password:
         raise HTTPException(status_code = 400, detail = "Incorrect username or password")
-    {"access_token": form_data.username, "token_type": "bearer"}
-    login_complete = """
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Simple Page</title>
-    </head>
-    <body>
-        <h1>Login complete</h1>
-    </body>
-    </html>
-    """
-    HTMLResponse(content=login_complete)
-
     return {"access_token": form_data.username, "token_type": "bearer"}
 
 @app.get("/protected")
@@ -73,15 +60,17 @@ async def protected(token: str = Depends(oauth2_scheme)):
 def add_author(request:Request, db: Session = Depends(get_db)):
     return template.TemplateResponse("add_author.html", {'request': request})
 
-
 @app.post('/author/add/result/', response_model=schemas.Author)
 def add_author(db: Session = Depends(get_db), name: str = Form(...), second_name: str = Form(...)):
     crud.create_author(db=db, name=name, second_name=second_name)
     html_content = """
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
-        <title>Simple Page</title>
+        <link href="/CSS/style.css" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Booklist</title>
     </head>
     <body>
         <h1>Author have added complete</h1>
@@ -91,12 +80,12 @@ def add_author(db: Session = Depends(get_db), name: str = Form(...), second_name
     return HTMLResponse(content=html_content)
 
 
-@app.get('author/get/', response_model=schemas.Author)
+@app.get('/author/get/', response_model=schemas.Author)
 def get_author(author_id: int, db: Session = Depends(get_db)):
     return crud.get_author(db, author_id)
 
 
-@app.get("/authorlist/")
+@app.get("/author/list/")
 def authorlist(request:Request, skip: int=0 , limit: int=50, db:Session = Depends(get_db)):
     authors = crud.get_authors(db, skip=skip, limit=limit)
     return template.TemplateResponse("authorlist.html", {'request': request, 'authors': authors})
@@ -105,14 +94,30 @@ def authorlist(request:Request, skip: int=0 , limit: int=50, db:Session = Depend
 def add_author(request:Request, db: Session = Depends(get_db)):
     return template.TemplateResponse("add_author.html", {'request': request})
 
+
+
 @app.get('/book/add/ask/', response_model=schemas.Author)
 def add_author(request:Request, db: Session = Depends(get_db)):
     return template.TemplateResponse("add_book.html", {'request': request})
 
 @app.post('/book/add/result', response_model=schemas.Book)
-def add_book(db: Session = Depends(get_db), curent_user: str = Depends(protected), title: str = Form(...), pages: int = Form(...), author_id: int = Form(...)):
+def add_book(db: Session = Depends(get_db), title: str = Form(...), pages: int = Form(...), author_id: int = Form(...)):#, curent_user: str = Depends(protected)
     crud.create_book(db=db, author_id=author_id, title=title, pages=pages)
-    return print("0")
+    html_add_book_result = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <link href="/CSS/style.css" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Booklist</title>
+    </head>
+    <body>
+        <h1>Book aded to site library</h1>
+    </body>
+    </html>
+    """
+    return HTMLResponse(content=html_add_book_result)
 
 
 @app.get('/book/get/', response_model=schemas.Book)
@@ -120,7 +125,7 @@ def get_book(book_id: int, db: Session = Depends(get_db), curent_user: str = Dep
     return crud.get_book(db, book_id)
 
 
-@app.get("/booklist/")
+@app.get("/book/list/")
 def booklist(request:Request, skip: int=0 , limit: int=50, db:Session= Depends(get_db)):
     books = crud.get_books(db, skip=skip, limit=limit)
     return template.TemplateResponse("booklist.html", {'request': request, 'books': books})

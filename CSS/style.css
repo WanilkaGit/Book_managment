@@ -12,15 +12,38 @@ p.GroupB {
     margin-top: 10px; /* Встановіть бажаний великий відступ */
 }
 
-ul{
+body {
+    font-family: Arial, sans-serif;
+}
+
+h2{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+h1{
+    margin-bottom: 60px;
+}
+
+li.form-container {
+    position: relative;
+    margin-bottom: 10px;
+    padding-left: 40px; /* Adjust according to your needs */
+}
+
+
+li.form-container form {
+    display: inline-block;
     margin-left: 10px;
+    position: relative;
+    top: -16px;
 }
 
 button {
     padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #4CAF50;
+    border: red;
+    border-radius: 20px;
+    background-color: darkred;
     color: white;
     cursor: pointer;
 }
