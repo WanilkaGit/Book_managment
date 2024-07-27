@@ -7,6 +7,10 @@
     <title>Document</title>
 </head>
 <body>
+    <form action="/" method="get"><button type="submit" class="GroupMain">Main menu</button></form>
+    <form action="/book/add/ask/" method="get"><button type="submit" class="GroupMain">Додати автора</button></form>
+    <form action="/book/get/ask/" method="post"><button type="submit" class="GroupMain">Більше про автора</button></form>
+    <h1>List of authors</h1>
     <h1>This is all books that we have on this small web app</h1>
     <p class="GroupB">You can add some books or book from main menu or by pressing the button</p>
     {% for book in books %}

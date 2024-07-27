@@ -46,9 +46,23 @@ li.form-container form {
 
 button {
     padding: 10px 20px;
-    border: red;
-    border-radius: 20px;
+    border: darkred;
+    border-radius: 17px;
     background-color: darkred;
     color: white;
     cursor: pointer;
+}
+
+button.GroupMain{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: darkred;
+    border-radius: 17px;
+    background-color: darkred;
+    color: white;
+    cursor: pointer;
+    font-size: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-flex;
 }

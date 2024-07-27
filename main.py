@@ -102,7 +102,7 @@ def add_author(request:Request):
     return template.TemplateResponse("add_book.html", {'request': request})
 
 @app.post('/book/add/result', response_model=schemas.Book)
-def add_book(db: Session = Depends(get_db), title: str = Form(...), pages: int = Form(...), author_id: int = Form(...), info: str =Form(...)):#, curent_user: str = Depends(protected)
+def add_book(db: Session = Depends(get_db), title: str = Form(...), pages: int = Form(...), author_id: int = Form(...), info: str =Form(...), current_user: str = Depends(protected)):#, curent_user: str = Depends(protected)
     crud.create_book(db=db, author_id=author_id, title=title, pages=pages, info=info)
     html_add_book_result = """
     <!DOCTYPE html>
