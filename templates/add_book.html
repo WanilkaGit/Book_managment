@@ -4,10 +4,12 @@
     <link href="/CSS/style.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booklist</title>
+    <title>Add a book</title>
 </head>
 <body>
-    <h1>Натисни кнопку</h1>
+    <h1>Add new book</h1>
+    <p>For add new book you need feel gups.</p>
+    <p>After it press on button for complete this</p>
     {% if message %}
         <p>{{ message }}</p>
     {% endif %}
@@ -18,6 +20,8 @@
         <input type="text" id="title" name="title" required>
         <label for="pages">Pages:</label>
         <input type="text" id="pages" name="pages" required>
+        <label for="info">Write smth about book:</label>
+        <input type="text" id="info" name="info" required>
         <button type="submit">Press me</button>
     </form>
 </body>

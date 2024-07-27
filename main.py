@@ -61,8 +61,8 @@ def add_author(request:Request):
     return template.TemplateResponse("add_author.html", {'request': request})
 
 @app.post('/author/add/result/', response_model=schemas.Author)
-def add_author(db: Session = Depends(get_db), name: str = Form(...), second_name: str = Form(...)):
-    crud.create_author(db=db, name=name, second_name=second_name)
+def add_author(db: Session = Depends(get_db), name: str = Form(...), second_name: str = Form(...), info: str =Form(...)):
+    crud.create_author(db=db, name=name, second_name=second_name, info=info)
     html_content = """
     <!DOCTYPE html>
     <html lang="en">
@@ -80,19 +80,20 @@ def add_author(db: Session = Depends(get_db), name: str = Form(...), second_name
     return HTMLResponse(content=html_content)
 
 
-@app.get('/author/get/', response_model=schemas.Author)
-def get_author(author_id: int, db: Session = Depends(get_db)):
-    return crud.get_author(db, author_id)
+@app.get('/author/get/ask/', response_model=schemas.Author)
+def get_author(request:Request):
+    return template.TemplateResponse("get_author.html", {'request': request})
+
+@app.post('/author/get/result/', response_model=schemas.Author)
+def get_author(request: Request, author_id: int = Form(...), db: Session = Depends(get_db)):
+    author = crud.get_author(db, author_id)
+    return template.TemplateResponse("get_author_res.html", {'request': request, "author": author})
 
 
 @app.get("/author/list/")
 def authorlist(request:Request, skip: int=0 , limit: int=50, db:Session = Depends(get_db)):
     authors = crud.get_authors(db, skip=skip, limit=limit)
     return template.TemplateResponse("authorlist.html", {'request': request, 'authors': authors})
-
-@app.get('/author/add/ask/', response_model=schemas.Author)
-def add_author(request:Request):
-    return template.TemplateResponse("add_author.html", {'request': request})
 
 
 
@@ -101,8 +102,8 @@ def add_author(request:Request):
     return template.TemplateResponse("add_book.html", {'request': request})
 
 @app.post('/book/add/result', response_model=schemas.Book)
-def add_book(db: Session = Depends(get_db), title: str = Form(...), pages: int = Form(...), author_id: int = Form(...)):#, curent_user: str = Depends(protected)
-    crud.create_book(db=db, author_id=author_id, title=title, pages=pages)
+def add_book(db: Session = Depends(get_db), title: str = Form(...), pages: int = Form(...), author_id: int = Form(...), info: str =Form(...)):#, curent_user: str = Depends(protected)
+    crud.create_book(db=db, author_id=author_id, title=title, pages=pages, info=info)
     html_add_book_result = """
     <!DOCTYPE html>
     <html lang="en">

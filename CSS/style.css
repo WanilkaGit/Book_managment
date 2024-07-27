@@ -12,6 +12,11 @@ p.GroupB {
     margin-top: 10px; /* Встановіть бажаний великий відступ */
 }
 
+p.GroupC {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 body {
     font-family: Arial, sans-serif;
 }

@@ -7,9 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <script>
-
-    </script>
+    <h1>This is all books that we have on this small web app</h1>
+    <p>You can add some books or book from main menu or by pressing the button</p>
     {% for book in books %}
         <p class="GroupA"><!-- {{book.id}}, --> Title: "{{book.title}}", Pages: {{book.pages}}</p>
         <p class="GroupB">Author name: {{book.author.name}}</p>

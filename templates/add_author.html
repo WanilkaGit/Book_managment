@@ -4,10 +4,12 @@
     <link href="/CSS/style.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booklist</title>
+    <title>Add Author</title>
 </head>
 <body>
-    <h1>Натисни кнопку</h1>
+    <h1>Create an author</h1>
+    <p>For create new author you need wright author ditails.</p>
+    <p>When you feel all gups press button to complete adding</p>
     {% if message %}
         <p>{{ message }}</p>
     {% endif %}
@@ -16,6 +18,8 @@
         <input type="text" id="name" name="name" required>
         <label for="second_name">Write author second name:</label>
         <input type="text" id="second_name" name="second_name" required>
+        <label for="info">Write smth about author:</label>
+        <input type="text" id="info" name="info" required>
         <button type="submit">Press me</button>
     </form>
 </body>

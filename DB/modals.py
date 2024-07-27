@@ -7,6 +7,7 @@ class DBAuthor(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(64), nullable=False)
     second_name = Column(String(64), nullable=False)
+    info = Column(String, nullable=True)
 
 
 class DBBook(Base):
@@ -15,6 +16,7 @@ class DBBook(Base):
     title = Column(String(64), nullable=False)
     # book_info = Column(String(264), nullable=False)
     pages = Column(Integer, nullable=False)
+    info = Column(String, nullable=True)
     author_id = Column(Integer, ForeignKey("author.id"))
 
     author = relationship(DBAuthor)
